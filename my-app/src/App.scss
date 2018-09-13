@@ -1,0 +1,127 @@
+/*CSS Reset is applied*/
+$text-color: #fff;
+$ink-color: #333333;
+$purple: #7433f1;
+$app-background-color: #f3ecfe;
+$base-font-size: 16px;
+$title-font-size: 24px;
+$field-status-font-size: 13px;
+/* Polaris is used as a guideline */
+html {
+  /* Load system fonts */
+  font-family: -apple-system, BlinkMacSystemFont, San Francisco, Roboto, Segoe UI, Helvetica Neue, sans-serif;
+
+  /* Make type rendering look crisper */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Disable auto-enlargement of small text in Safari */
+  text-size-adjust: 100%;
+
+  /* Enable kerning and optional ligatures */
+  text-rendering: optimizeLegibility;
+}
+body {
+	max-width: 1920px;
+	margin: 0 auto;
+}
+#app {
+	box-shadow: 0 0 3px $ink-color;
+}
+h1 {
+	font-size: 42px;
+	line-height: 44px;
+	font-weight: 500;
+}
+
+header {
+	padding: 50px 0 50px 0;
+	text-align: center;
+	background: $purple;
+	color: white;
+}
+.content {
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+}
+.leftPannel {
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	padding: 2em 3em 0 3em;
+}
+.rightPannel {
+	background: $app-background-color;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	padding: 1.5em 3em 1em 3em;
+}
+/* Search Component Start */
+.search-wrapper {
+  display: flex;
+  flex-direction: row;
+	flex-shrink: 0;
+}
+.search-input,
+.search {
+  margin: 1em 0em 1em 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: none;
+  padding: 1em 1em;
+  height: 40px;
+}
+.search-input {
+	border: 1px solid black;
+	flex-grow: 1;
+	margin-right: 15px;
+}
+.search {
+  background-color: $purple;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  padding: 1em 3.5em;
+}
+.search:hover {
+  box-shadow: 0 5px 25px 0 rgba(0, 0, 0, 0.25);
+  background-color: #202e78;
+}
+.search:focus {
+  box-shadow: 0 0 0.1875em 0.1875em rgba(92, 106, 196, 0.5);
+  background-color: #202e78;
+  outline: none;
+}
+.search:active {
+  box-shadow: 0 0 0.1875em 0.1875em rgba(92, 106, 196, 0.5);
+  background-color: #000639;
+  border-color: #000639;
+}
+@media only screen and (max-width: 750px) {
+  .input[type="text"] {
+    margin: none;
+  }
+}
+.table-wrapper {
+  display: flex;
+  flex-shrink: 0;
+}
+/* Search Component End*/
+table {
+	width: 100%;
+}
+th {
+	text-align: left;
+	font-weight: bold;
+	color: $ink-color;
+	padding: 1em 0 1em 0;
+}
+td {
+	padding: 0.25em 0;
+}
+.edit-anchor {
+	text-align: right;
+}
