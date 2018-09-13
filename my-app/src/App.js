@@ -11,6 +11,30 @@ const axiosGitHubGraphQL = axios.create({
     Authorization: 'bearer 07af01a5dd12614d1c7fecc18492a1d9ad2b5ea6',
   },
 });
+
+const getSearchQuery = (query) =>` { search(query: " ${ query } ", type: REPOSITORY, first: 10) {
+  repositoryCount
+    edges {
+      node {
+        ... on Repository {
+          name
+          url
+					tags:refs(refPrefix:"refs/tags/", last:1) {
+            edges {
+              tag:node {
+                name
+              }
+            }
+          }
+          primaryLanguage {
+            name
+          }
+        }
+      }
+    }
+  }
+}`
+
 class Header extends Component {
 	constructor(props) {
  		super(props);
@@ -36,7 +60,10 @@ class LeftPannel extends Component {
 class Search extends Component {
   constructor(props) {
     super(props);
-    this.state = {query: ''};
+    this.state = {
+      query: '',
+      data : []
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,24 +74,26 @@ class Search extends Component {
   }
 
   handleChange = event => {
-    //console.log(event.target.value)
     this.setState({ query: event.target.value });
   };
 
   handleSubmit = event => {
     this.onFetchFromGitHub(this.state.query);
-    console.log(this.state.query)
+    console.log(this.state.data)
     event.preventDefault();
   };
 
   onFetchFromGitHub = () => {
     axiosGitHubGraphQL
       .post('', { query: getSearchQuery(this.state.query) })
-      .then(result => console.log(result));
+      .then(result =>
+        this.setState(() => ({
+          data: result.data.data.search.edges
+        })),
+      );
   };
 
 	render() {
-    const { path } = this.state;
 		return (
 			<div>
 				<form  className="search-wrapper">
@@ -95,7 +124,6 @@ class Table extends Component {
   						<th>Name</th>
   						<th>Language</th>
   						<th>Latest tag</th>
-  						<th></th>
   					</tr>
   					<Row/>
   					<Row/>
@@ -105,6 +133,7 @@ class Table extends Component {
 		)
 	}
 }
+
 class Row extends Component {
 	render() {
 		return (
@@ -163,56 +192,5 @@ class App extends Component {
     )
   }
 }
-const getSearchQuery = (query) =>` { search(query: " ${ query } ", type: REPOSITORY, first: 10) {
-  repositoryCount
-    edges {
-      node {
-        ... on Repository {
-          name
-          url
-					tags:refs(refPrefix:"refs/tags/", last:1) {
-            edges {
-              tag:node {
-                name
-              }
-            }
-          }
-          primaryLanguage {
-            name
-          }
-        }
-      }
-    }
-  }
-}`
-
-
-/*
-let getData = (variable) => {
-  fetch('https://api.github.com/graphql', {
-    method: 'POST',
-    headers: { Authorization: gitHubToken },
-    query: gitHubSearchQuery,
-    variables: { "entry": variable }
-  })
-    .then(res => res.json())
-    .then(res => console.log(res.data));
-}
-getData("Shopify");
-  /*$.ajax({
-    method: "POST",
-    url: "https://api.github.com/graphql",
-    contentType: "application/json",
-    headers: {
-    Authorization: "bearer ***********"
-    },
-    data: JSON.stringify({
-    query: gitHubSearchQuery,
-    variables: { "entry": variable }
-    }
-  });
-}*/
-
-
 
 export default App;
