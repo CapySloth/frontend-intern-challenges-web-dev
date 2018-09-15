@@ -7,6 +7,7 @@
     "express-graphql": "^0.6.12",
     "graphiql": "^0.11.11",
     "jquery": "^3.3.1",
+    "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-scripts": "1.1.5"

@@ -13,6 +13,7 @@ html {
 
 body {
   max-width: 1920px;
+  /* Centering the app, the old fashioned way*/
   margin: 0 auto; }
 
 #app {
@@ -32,20 +33,17 @@ header {
 .content {
   display: flex;
   flex-direction: row;
-  height: 100vh; }
+  flex-grow: 1 auto;
+  height: 100%; }
 
-.leftPannel {
+.leftPannel, .rightPannel {
   width: 50%;
   display: flex;
   flex-direction: column;
-  padding: 2em 3em 0 3em; }
+  padding: 2em 3em 2em 3em; }
 
 .rightPannel {
-  background: #f3ecfe;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  padding: 1.5em 3em 1em 3em; }
+  background: #f3ecfe; }
 
 /* Search Component Start */
 .search-wrapper {
@@ -89,18 +87,20 @@ header {
   background-color: #000639;
   border-color: #000639; }
 
-@media only screen and (max-width: 750px) {
-.content {
-  flex-direction: column;
-}
-.rightPannel, .leftPannel {
-  width: auto;
-}
-.input[type="text"] {
-    margin: none; } }
-.table-wrapper {
-  display: flex;
-  flex-shrink: 0; }
+/* Making button for mutating row states look like links to match design, while honoring HTML semantics */
+.button-edit {
+  background: none;
+  color: #7433f1;
+  padding: 0;
+  font: inherit;
+  border: none;
+  border-bottom: 1px solid #7433f1;
+  cursor: pointer;
+  outline: 0;
+  float: right; }
+
+.button-edit:focus {
+  outline: 0; }
 
 /* Search Component End*/
 table {
@@ -115,5 +115,26 @@ th {
 td {
   padding: 0.25em 0; }
 
-.edit-anchor {
-  text-align: right; }
+@media only screen and (max-width: 750px) {
+  .input[type="text"] {
+    margin: none; }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    height: auto; }
+
+  .leftPannel, .rightPannel {
+    width: auto; }
+
+  .search-wrapper {
+    flex-direction: column;
+    min-width: 310px; }
+
+  .search-input {
+    margin: 0; }
+
+  .table-wrapper {
+    display: flex;
+    flex-shrink: 0;
+    min-width: 310px; } }

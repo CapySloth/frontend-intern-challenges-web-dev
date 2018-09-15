@@ -4,11 +4,12 @@ import './reset.css';
 import './App.css';
 
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const axiosGitHubGraphQL = axios.create({
   baseURL: 'https://api.github.com/graphql',
   headers: {
-    Authorization: 'bearer 07af01a5dd12614d1c7fecc18492a1d9ad2b5ea6',
+    Authorization: 'bearer e075f9f416c599f6ab13005888347dec89179719',
   },
 });
 
@@ -47,11 +48,22 @@ class Header extends Component {
 	}
 }
 class LeftPannel extends Component {
+  constructor(){
+  super();
+  this.state= {
+    data : []
+    }
+  }
+  fromSearch(params) {
+    if(params !== null) {
+      this.setState({ data : params });
+    }
+  }
 	render() {
 		return (
 			<div className="leftPannel">
-				<Search/>
-				<Repositories/>
+				<Search callback={this.fromSearch.bind(this)}/>
+				<Repositories data={this.state.data}/>
 			</div>
 		)
 	}
@@ -64,7 +76,9 @@ class Search extends Component {
       query: '',
       data : []
     };
-
+    Search.protoTypes = {
+      callback : PropTypes.func,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -74,12 +88,12 @@ class Search extends Component {
   }
 
   handleChange = event => {
-    this.setState({ query: event.target.value });
+    this.setState({ query: event.target.value }, this.HandleSubmit);
+    console.log(this.state.query);
   };
 
   handleSubmit = event => {
     this.onFetchFromGitHub(this.state.query);
-    console.log(this.state.data)
     event.preventDefault();
   };
 
@@ -91,6 +105,7 @@ class Search extends Component {
           data: result.data.data.search.edges
         })),
       );
+      this.props.callback(this.state.data);
   };
 
 	render() {
@@ -101,7 +116,7 @@ class Search extends Component {
           className="search-input"
           type="text"
           name="search"
-          placeholder="Enter GitHub repository name"
+          placeholder="Find repositories..."
           value={this.state.value} onChange={this.handleChange}/>
 					<button type="button" onClick={this.handleSubmit} className="search">Search</button>
 				</form>
@@ -111,11 +126,19 @@ class Search extends Component {
 }
 class Repositories extends Component {
 	render() {
-		return <Table/>
+		return (
+      <Table data={this.props.data} editType="Add"/>
+    )
+
 	}
 }
 class Table extends Component {
 	render() {
+    if(this.props.data !== null) {
+      for(let i = 0; i < this.props.data; i++) {
+        console.log(this.props.data.node);
+      }
+    }
 		return (
 			<div className="table-wrapper">
 				<table>
@@ -125,8 +148,8 @@ class Table extends Component {
   						<th>Language</th>
   						<th>Latest tag</th>
   					</tr>
-  					<Row/>
-  					<Row/>
+  					<Row editType={this.props.editType}/>
+  					<Row editType={this.props.editType}/>
           </tbody>
 				</table>
 			</div>
@@ -141,34 +164,37 @@ class Row extends Component {
 				<td>Repo Name</td>
 				<td>Liquid</td>
 				<td>v1</td>
-				<td className="edit-anchor"><RowMutationAnchor editType="Add"/></td>
+				<td className="edit-button"><RowMutationButton editType= {this.props.editType}/></td>
 			</tr>
 		)
 	}
 }
-class RowMutationAnchor extends Component {
+class RowMutationButton extends Component {
 	constructor(props) {
  		super(props);
-		this.state = { editType : "Add" };
 	}
 	render() {
 		return(
-			<a href="#" href="javascript:void(0)"> { this.state.editType }</a>
+			<button className="button-edit">{ this.props.editType }</button>
 		)
 	}
 }
 class RightPannel extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { favorites : [] };
+  }
 	render() {
 		return(
 			<div className="rightPannel">
-				<Favorites/>
+				<Favorites data={this.state.favorites}/>
 			</div>
 		)
 	}
 }
 class Favorites extends Component {
 	render() {
-		return <Table/>
+		return <Table data={this.props.favorites} editType="Remove"/>
 	}
 }
 class Content extends Component {
