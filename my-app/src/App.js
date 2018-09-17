@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 const axiosGitHubGraphQL = axios.create({
   baseURL: 'https://api.github.com/graphql',
   headers: {
-    Authorization: 'bearer 1396f433bb35970f8c3c74189aef194105281f8d',
+    Authorization: 'bearer bbad63ae02ea151edc38a2511ed5d972cfe791ca',
   },
 });
 
@@ -18,7 +18,8 @@ const getSearchQuery = (query) =>` { search(query: " ${ query } ", type: REPOSIT
     edges {
       node {
         ... on Repository {
-          name
+          id
+          nameWithOwner
           url
 					tags:refs(refPrefix:"refs/tags/", last:1) {
             edges {
@@ -100,17 +101,20 @@ class Search extends Component {
   };
 
 	render() {
-
 		return (
 			<div>
 				<form  className="search-wrapper">
 					<input
-          className="search-input"
-          type="text"
-          name="search"
-          placeholder="Find repositories..."
-          value={this.state.value} onChange={this.handleChange}/>
-					<button type="button" onClick={this.handleSubmit} className="search">Search</button>
+            className="search-input"
+            type="text"
+            name="search"
+            placeholder="Find repositories..."
+            value={this.state.value}
+            onChange={this.handleChange}/>
+					<button
+            type="button"
+            onClick={this.handleSubmit}
+            className="search">Search</button>
 				</form>
 			</div>
 		)
@@ -124,19 +128,19 @@ class Repositories extends Component {
 
 	}
 }
-/*{ items.map(item =>
-  <Row link={item.link} name={item.name} language={this.props.language} tag={this.props.tag}/> )}*/
 class Table extends Component {
 	render() {
-    let items = [];
     let hasData = false;
+    let items = [];
     if(this.props.data !== null) {
-      hasData = true;
-      //console.log(this.props.data)
       items = this.props.data;
-      console.log(this.props.data)
+      console.log(typeof(items))
+      if(items != null) {
+        if(items.length !== 0) {
+          hasData = true;
+        }
+      }
     }
-
 		return (
 			<div className="table-wrapper">
 				<table>
@@ -146,7 +150,16 @@ class Table extends Component {
   						<th>Language</th>
   						<th>Latest tag</th>
   					</tr>
-            {items.map(item => <Row link={item.node.url} name={item.node.name} language={item.node.primaryLanguage.name} tag="2" editType={this.props.editType}/>)}
+            {hasData &&
+                items.map(item => <Row
+                key={item.node.id}
+                link={item.node.url}
+                name={item.node.nameWithOwner}
+                language={(item.node.primaryLanguage === null) ? "-" : item.node.primaryLanguage.name }
+                tag={(item.node.tags.edges.length === 0) ? "-" : item.node.tags.edges[0].tag.name}
+                editType={this.props.editType}/>)
+            }
+            {!hasData && <tr></tr>}
           </tbody>
 				</table>
 			</div>
@@ -188,7 +201,7 @@ class RightPannel extends Component {
 	render() {
 		return(
 			<div className="rightPannel">
-
+        <Favorites data={this.state.favorites}/>
 			</div>
 		)
 	}
