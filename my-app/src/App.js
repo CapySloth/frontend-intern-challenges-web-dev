@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 const axiosGitHubGraphQL = axios.create({
   baseURL: 'https://api.github.com/graphql',
   headers: {
-    Authorization: 'bearer e075f9f416c599f6ab13005888347dec89179719',
+    Authorization: 'bearer 1396f433bb35970f8c3c74189aef194105281f8d',
   },
 });
 
@@ -48,21 +48,20 @@ class Header extends Component {
 	}
 }
 class LeftPannel extends Component {
-  constructor(){
-  super();
-  this.state= {
-    data : []
-    }
+  constructor(props){
+    super(props);
+    this.state= { data : [] }
+    this.handleDataUpdate = this.handleDataUpdate.bind(this);
   }
-  fromSearch(params) {
-    if(params !== null) {
-      this.setState({ data : params });
-    }
+  handleDataUpdate(response) {
+    this.setState({
+      data: response
+    });
   }
 	render() {
 		return (
 			<div className="leftPannel">
-				<Search callback={this.fromSearch.bind(this)}/>
+				<Search handleDataUpdate={this.handleDataUpdate.bind(this)}/>
 				<Repositories data={this.state.data}/>
 			</div>
 		)
@@ -73,26 +72,19 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: '',
-      data : []
+      query: ''
     };
-    Search.protoTypes = {
-      callback : PropTypes.func,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.onFetchFromGitHub();
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ query: event.target.value }, this.HandleSubmit);
-    console.log(this.state.query);
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     this.onFetchFromGitHub(this.state.query);
     event.preventDefault();
   };
@@ -100,15 +92,15 @@ class Search extends Component {
   onFetchFromGitHub = () => {
     axiosGitHubGraphQL
       .post('', { query: getSearchQuery(this.state.query) })
-      .then(result =>
-        this.setState(() => ({
-          data: result.data.data.search.edges
-        })),
-      );
-      this.props.callback(this.state.data);
+      .then(response => {
+        if(response.data !== null) {
+          this.props.handleDataUpdate(response.data.data.search.edges);
+        }
+      })
   };
 
 	render() {
+
 		return (
 			<div>
 				<form  className="search-wrapper">
@@ -132,13 +124,19 @@ class Repositories extends Component {
 
 	}
 }
+/*{ items.map(item =>
+  <Row link={item.link} name={item.name} language={this.props.language} tag={this.props.tag}/> )}*/
 class Table extends Component {
 	render() {
+    let items = [];
+    let hasData = false;
     if(this.props.data !== null) {
-      for(let i = 0; i < this.props.data; i++) {
-        console.log(this.props.data.node);
-      }
+      hasData = true;
+      //console.log(this.props.data)
+      items = this.props.data;
+      console.log(this.props.data)
     }
+
 		return (
 			<div className="table-wrapper">
 				<table>
@@ -148,8 +146,7 @@ class Table extends Component {
   						<th>Language</th>
   						<th>Latest tag</th>
   					</tr>
-  					<Row editType={this.props.editType}/>
-  					<Row editType={this.props.editType}/>
+            {items.map(item => <Row link={item.node.url} name={item.node.name} language={item.node.primaryLanguage.name} tag="2" editType={this.props.editType}/>)}
           </tbody>
 				</table>
 			</div>
@@ -161,9 +158,9 @@ class Row extends Component {
 	render() {
 		return (
 			<tr>
-				<td>Repo Name</td>
-				<td>Liquid</td>
-				<td>v1</td>
+				<td><a href={this.props.link}>{this.props.name}</a></td>
+				<td>{this.props.language}</td>
+				<td>{this.props.tag}</td>
 				<td className="edit-button"><RowMutationButton editType= {this.props.editType}/></td>
 			</tr>
 		)
@@ -179,15 +176,19 @@ class RowMutationButton extends Component {
 		)
 	}
 }
+/* <Favorites data={this.state.favorites}/>*/
 class RightPannel extends Component {
   constructor(props) {
     super(props);
-    this.state = { favorites : [] };
+    this.state = {
+      favorites: []
+    };
+    //console.log(this.state.favorites);
   }
 	render() {
 		return(
 			<div className="rightPannel">
-				<Favorites data={this.state.favorites}/>
+
 			</div>
 		)
 	}
