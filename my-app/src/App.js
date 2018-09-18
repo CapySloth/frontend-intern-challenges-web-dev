@@ -4,7 +4,6 @@ import './reset.css';
 import './App.css';
 
 import axios from 'axios';
-import PropTypes from 'prop-types';
 
 const axiosGitHubGraphQL = axios.create({
   baseURL: 'https://api.github.com/graphql',
@@ -52,33 +51,47 @@ class Content extends Component {
     this.state = {
       favorites: []
     };
-
-    let handleAddFavorite = this.handleAddFavorite.bind(this);
-    let removeFavorite = this.handleRemoveFavorite.bind(this);
+  }
+  updateDataToLocalStorage = (data) => {
+  	//Grab JSON data from local storage, if it does not exist create an empty array
+  	let localData = JSON.parse(localStorage.getItem("github-data")) || [];
+  	// Push the new data (whether it be an object or anything else) onto the array
+    if(localData.length !== 0) {
+      localData.pop();
+    }
+  	// Re-serialize the array back into a string and store it in localStorage
+  	localStorage.setItem("github-data", JSON.stringify(data));
+  }
+  getDataFromLocalStorage() {
+    let array = JSON.parse(localStorage.getItem("github-data"));
+    if(array != null) {
+      this.setState({favorites: array})
+    }
   }
   handleAddFavorite = (rowToAdd) => {
-    //Pass row information to Favorites, to update set with new information
     this.setState({
       favorites: [...this.state.favorites, rowToAdd]
     });
-    //Is passing the prop more expensive, or the creating of an additional state, that is a smaller value
-    //Put id of row added to the button, so that Add can be remove, great stuff
   }
   handleRemoveFavorite = (index) => {
     var array = [...this.state.favorites]; // make a separate copy of the array
-    console.log(index)
     array.splice(index, 1);
     this.setState({ favorites: array });
-    console.log(this.state.favorites)
-    //delete row information from favorites array in favorites component,
-    //delete row id from button control in repositories controller somewhere
-    //Wow, easy pz.
+  }
+  componentWillMount() {
+    this.getDataFromLocalStorage();
+  }
+  componentDidUpdate() {
+    //Can't get this stuff to store on Unmount or whatever represents termination of component on close/refresh of window.
+    //Hence me storing it every update (Every time you add or Remove something to Favorites)
+    this.updateDataToLocalStorage(this.state.favorites);
+    console.log(JSON.parse(localStorage.getItem("github-data")));
   }
 	render() {
 		return(
 			<div className="content">
-				<LeftPannel handleAddFavorite={this.handleAddFavorite} favorites={this.state.favorites}/>
-				<RightPannel handleRemoveFavorite={this.handleRemoveFavorite} favorites={this.state.favorites}/>
+				<LeftPannel handleAddFavorite={this.handleAddFavorite.bind(this)} favorites={this.state.favorites}/>
+				<RightPannel handleRemoveFavorite={this.handleRemoveFavorite.bind(this)} favorites={this.state.favorites}/>
 			</div>
 		)
 	}
@@ -105,14 +118,22 @@ class LeftPannel extends Component {
       data: response
     });
   }
-	render() {
-		return (
-			<div className="leftPannel">
-				<Search handleDataUpdate={this.handleDataUpdate.bind(this)}/>
-				<Repositories handleAddFavorite={this.props.handleAddFavorite} favorites={this.props.favorites} data={this.state.data}/>
-			</div>
-		)
-	}
+  render() {
+    if(this.state.data.length !== 0 && this.state.data != null) {
+      return(
+        <div className="leftPannel">
+  				<Search handleDataUpdate={this.handleDataUpdate.bind(this)}/>
+  				<Repositories handleAddFavorite={this.props.handleAddFavorite} favorites={this.props.favorites} data={this.state.data}/>
+  			</div>
+      )
+    } else {
+      return(
+        <div className="leftPannel">
+          <Search handleDataUpdate={this.handleDataUpdate.bind(this)}/>
+        </div>
+      )
+    }
+  }
 }
 
 class Search extends Component {
@@ -222,7 +243,6 @@ class Row extends Component {
     if(editType === "Add") {
       this.props.handleAddFavorite(this.props.node);
     } else if(editType === "Remove") {
-      console.log(this.props.nameWithOwner)
       this.props.handleRemoveFavorite(this.props.favorites.indexOf(this.props.node));
     }
   }
@@ -256,7 +276,7 @@ class Row extends Component {
 class RightPannel extends Component {
   constructor(props) {
     super(props);
-    this.state= { data : [] }
+    this.state= { data : this.props.favorites }
   }
   componentWillReceiveProps(nextProps) {
     if(nextProps != null) {
@@ -264,7 +284,6 @@ class RightPannel extends Component {
     }
   }
 	render() {
-    console.log(this.state.data.length);
     if(this.state.data.length !== 0 && this.state.data != null) {
       return(
   			<div className="rightPannel">
