@@ -4,6 +4,11 @@ import './App.css';
 
 import axios from 'axios';
 
+let http = require("http");
+setInterval(function() {
+    http.get("https://frontend-intern-challenges-web.herokuapp.com/");
+}, 300000); // every 5 minutes (300000)
+
 const axiosGitHubGraphQL = axios.create({
   baseURL: 'https://api.github.com/graphql',
   headers: {
