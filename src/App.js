@@ -7,7 +7,7 @@ import axios from 'axios';
 const axiosGitHubGraphQL = axios.create({
   baseURL: 'https://api.github.com/graphql',
   headers: {
-    Authorization: 'bearer TOKEN',
+    Authorization: 'bearer 8c25b7e3663ab612c25dc16d53ebc840303a599d',
   },
 });
 
