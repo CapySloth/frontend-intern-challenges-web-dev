@@ -29,7 +29,7 @@ html {
   /* Enable kerning and optional ligatures */
   text-rendering: optimizeLegibility;
 }
-body {
+html {
 	max-width: 1920px;
   /* Centering the app, the old fashioned way*/
 	margin: 0 auto;
@@ -46,9 +46,9 @@ h1 {
 	font-weight: 500;
 }
 #root {
-	box-shadow: 0 0 3px $ink-color;
   display:flex;
   flex-direction: column;
+  box-shadow: 0 0 3px $ink-color;
 }
 a {
   color: $ink-color;
@@ -146,6 +146,9 @@ td {
 @media only screen and (max-width: 1000px) {
   .input[type="text"] {
     margin: none;
+  }
+  #root {
+    box-shadow: none;
   }
   .content {
   	display: flex;
