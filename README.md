@@ -30,5 +30,5 @@ Build a web app to search Github repositories, favourite repos, manage favourite
 
 ## Instructions to get this running
 Run following commands in console:
-1. $ npm install
-2. $ npm start 
+1. ````npm install````
+2. ````npm start````
