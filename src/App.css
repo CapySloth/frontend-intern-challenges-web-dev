@@ -109,6 +109,9 @@ a:hover {
   outline: 0;
   float: right; }
 
+.button-edit:hover {
+  color: #333333; }
+
 .button-edit:focus {
   outline: 0;
   color: red; }

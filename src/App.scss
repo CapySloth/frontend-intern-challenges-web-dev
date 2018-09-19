@@ -123,6 +123,9 @@ a:hover {
   outline: 0;
   float: right;
 }
+.button-edit:hover{
+  color: $ink-color;
+}
 .button-edit:focus {
   outline: 0;
   color: red;
