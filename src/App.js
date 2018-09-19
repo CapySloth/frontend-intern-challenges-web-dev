@@ -119,7 +119,7 @@ class LeftPannel extends Component {
     });
   }
   render() {
-    if(this.state.data.length !== 0 && this.state.data != null) {
+    if(this.state.data != null && this.state.data.length !== 0) {
       return(
         <div className="leftPannel">
   				<Search handleDataUpdate={this.handleDataUpdate.bind(this)}/>
@@ -208,10 +208,8 @@ class Table extends Component {
 
     if(this.props.data !== null) {
       items = this.props.data;
-      if(items != null) {
-        if(items.length !== 0) {
-          hasData = true;
-        }
+      if(items.length !== 0) {
+        hasData = true;
       }
     }
 		return (
