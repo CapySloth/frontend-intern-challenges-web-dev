@@ -29,5 +29,6 @@ Build a web app to search Github repositories, favourite repos, manage favourite
 - [Docs on how to create a personal access token to make request to the Github API](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/)
 
 ## Instructions to get this running
-1. run npm install
-2. run npm start 
+Run following commands in console:
+1. $ npm install
+2. $ npm start 
