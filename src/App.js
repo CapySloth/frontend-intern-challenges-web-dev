@@ -37,12 +37,10 @@ const getSearchQuery = (query) =>` { search(query: " ${ query } ", type: REPOSIT
 
 class App extends Component {
   render() {
-    return (
-      <div id="app">
-        <Header/>
-        <Content/>
-      </div>
-    )
+    return [
+      <Header key="header"/>,
+      <Content key="content"/>
+    ];
   }
 }
 
@@ -75,7 +73,7 @@ class Content extends Component {
     });
   }
   handleRemoveFavorite = (index) => {
-    var array = [...this.state.favorites]; // make a separate copy of the array
+    var array = [...this.state.favorites];
     array.splice(index, 1);
     this.setState({ favorites: array });
   }
@@ -86,7 +84,6 @@ class Content extends Component {
     //Can't get this stuff to store on Unmount or whatever represents termination of component on close/refresh of window.
     //Hence me storing it every update (Every time you add or Remove something to Favorites)
     this.updateDataToLocalStorage(this.state.favorites);
-    console.log(JSON.parse(localStorage.getItem("github-data")));
   }
 	render() {
 		return(
@@ -276,7 +273,7 @@ class Row extends Component {
         <td><a href={this.props.link}>{this.props.nameWithOwner}</a></td>
         <td>{this.props.language}</td>
         <td>{this.props.tag}</td>
-        <td className="edit-button"><button className="button-edit" onClick={(event) => this.handleClick(event, this.props.editType)}>{this.props.editType}</button></td>
+        <td><button className="button-edit" onClick={(event) => this.handleClick(event, this.props.editType)}>{this.props.editType}</button></td>
       </tr>
       )
     }

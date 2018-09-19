@@ -10,8 +10,10 @@ $base-font-size: 16px;
 $title-font-size: 24px;
 $field-status-font-size: 13px;
 /* Polaris is used as a guideline */
-html, body, #root, #app, .content {
+html, body, #root, #app {
   height: 100%;
+  //This is a boo boo, but I can't spend the time making this truly mobile accessible
+  min-width: 500px;
 }
 html {
   /* Load system fonts */
@@ -45,6 +47,8 @@ h1 {
 }
 #root {
 	box-shadow: 0 0 3px $ink-color;
+  display:flex;
+  flex-direction: column;
 }
 a {
   color: $ink-color;
@@ -55,13 +59,10 @@ a:hover {
 }
 .content {
 	display: flex;
-	flex-direction: row;
-  flex-grow: 1 auto;
-	height: 100%;
+  height:100%;
 }
 .leftPannel, .rightPannel{
 	width: 50%;
-  height: 100%;
 	display: flex;
 	flex-direction: column;
 	padding: 2em 3em 2em 3em;
@@ -139,21 +140,20 @@ th {
 td {
 	padding: 0.25em 0;
 }
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 1000px) {
   .input[type="text"] {
     margin: none;
   }
   .content {
   	display: flex;
   	flex-direction: column;
-    height: auto;
   }
   .leftPannel, .rightPannel {
     width: auto;
+    display: block;
   }
   .search-wrapper {
     flex-direction: column;
-    min-width: 310px;
   }
   .search-input {
     margin: 0;
@@ -161,6 +161,5 @@ td {
   .table-wrapper {
     display: flex;
     flex-shrink: 0;
-    min-width: 310px;
   }
 }
