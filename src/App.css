@@ -1,5 +1,8 @@
 /*CSS Reset is applied*/
 /* Polaris is used as a guideline */
+html, body, #root, #app, .content {
+  height: 100%; }
+
 html {
   /* Load system fonts */
   font-family: -apple-system, BlinkMacSystemFont, San Francisco, Roboto, Segoe UI, Helvetica Neue, sans-serif;
@@ -16,19 +19,26 @@ body {
   /* Centering the app, the old fashioned way*/
   margin: 0 auto; }
 
-#app {
-  box-shadow: 0 0 3px #333333; }
+header {
+  padding: 40px 0 40px 0;
+  text-align: center;
+  background: #7433f1;
+  color: white; }
 
 h1 {
   font-size: 42px;
   line-height: 44px;
   font-weight: 500; }
 
-header {
-  padding: 50px 0 50px 0;
-  text-align: center;
-  background: #7433f1;
-  color: white; }
+#root {
+  box-shadow: 0 0 3px #333333; }
+
+a {
+  color: #333333;
+  text-decoration: none; }
+
+a:hover {
+  color: #7433f1; }
 
 .content {
   display: flex;
@@ -38,6 +48,7 @@ header {
 
 .leftPannel, .rightPannel {
   width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   padding: 2em 3em 2em 3em; }
@@ -75,16 +86,15 @@ header {
 
 .search:hover {
   box-shadow: 0 5px 25px 0 rgba(0, 0, 0, 0.25);
-  background-color: #202e78; }
+  background-color: #50248f; }
 
 .search:focus {
   box-shadow: 0 0 0.1875em 0.1875em rgba(92, 106, 196, 0.5);
-  background-color: #202e78;
   outline: none; }
 
 .search:active {
   box-shadow: 0 0 0.1875em 0.1875em rgba(92, 106, 196, 0.5);
-  background-color: #000639;
+  background-color: #230051;
   border-color: #000639; }
 
 /* Making button for mutating row states look like links to match design, while honoring HTML semantics */
@@ -100,7 +110,8 @@ header {
   float: right; }
 
 .button-edit:focus {
-  outline: 0; }
+  outline: 0;
+  color: red; }
 
 /* Search Component End*/
 table {

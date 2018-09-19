@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './data-fetch.js';
 import './reset.css';
 import './App.css';
 
@@ -8,7 +7,7 @@ import axios from 'axios';
 const axiosGitHubGraphQL = axios.create({
   baseURL: 'https://api.github.com/graphql',
   headers: {
-    Authorization: 'bearer 78d2cf634c8cb19ca7fd3882de3dc1f9033e2cbc',
+    Authorization: 'bearer e6acf5b8f8939fee0631c1775005cf5ae6f679bf',
   },
 });
 
@@ -35,16 +34,18 @@ const getSearchQuery = (query) =>` { search(query: " ${ query } ", type: REPOSIT
     }
   }
 }`
+
 class App extends Component {
   render() {
     return (
-      <div>
+      <div id="app">
         <Header/>
         <Content/>
       </div>
     )
   }
 }
+
 class Content extends Component {
   constructor(props) {
     super(props);
@@ -96,6 +97,7 @@ class Content extends Component {
 		)
 	}
 }
+
 class Header extends Component {
 	constructor(props) {
  		super(props);
@@ -107,6 +109,7 @@ class Header extends Component {
 			</header>
 	}
 }
+
 class LeftPannel extends Component {
   constructor(props){
     super(props);
@@ -143,20 +146,26 @@ class Search extends Component {
       query: ''
     };
   }
-
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.handleSubmit(e);
+    }
+  }
   componentDidMount() {
     this.onFetchFromGitHub();
   }
-
   handleChange = (event) => {
-    this.setState({ query: event.target.value }, this.HandleSubmit);
-  };
+    if(event.target.value !== "") {
+      this.setState({ query: event.target.value }, this.HandleSubmit);
+    } else {
+      this.props.handleDataUpdate([]);
+    }
 
+  };
   handleSubmit = (event) => {
     this.onFetchFromGitHub(this.state.query);
     event.preventDefault();
   };
-
   onFetchFromGitHub = () => {
     axiosGitHubGraphQL
       .post('', { query: getSearchQuery(this.state.query) })
@@ -166,27 +175,26 @@ class Search extends Component {
         }
       })
   };
-
 	render() {
 		return (
-			<div>
-				<form  className="search-wrapper">
-					<input
-            className="search-input"
-            type="text"
-            name="search"
-            placeholder="Find repositories..."
-            value={this.state.value}
-            onChange={this.handleChange}/>
-					<button
-            type="button"
-            onClick={this.handleSubmit}
-            className="search">Search</button>
-				</form>
+			<div  className="search-wrapper">
+				<input
+          className="search-input"
+          type="text"
+          name="search"
+          placeholder="Find repositories..."
+          value={this.state.value}
+          onKeyPress={this._handleKeyPress}
+          onChange={this.handleChange}/>
+		      <button
+          type="button"
+          onClick={this.handleSubmit}
+          className="search">Search</button>
 			</div>
 		)
 	}
 }
+
 class Repositories extends Component {
 	render() {
 		return (
@@ -195,6 +203,7 @@ class Repositories extends Component {
 
 	}
 }
+
 class Table extends Component {
 	render() {
     let hasData = false;
@@ -237,6 +246,7 @@ class Table extends Component {
 		)
 	}
 }
+
 //Fix edit button and button eddit stuff, ugly :(
 class Row extends Component {
   handleClick = (event, editType) => {
@@ -272,7 +282,7 @@ class Row extends Component {
     }
 	}
 }
-/* <Favorites data={this.state.favorites}/>*/
+
 class RightPannel extends Component {
   constructor(props) {
     super(props);
@@ -297,9 +307,11 @@ class RightPannel extends Component {
     }
 	}
 }
+
 class Favorites extends Component {
 	render() {
 		return <Table data={this.props.data} handleRemoveFavorite={this.props.handleRemoveFavorite} favorites={this.props.data} editType="Remove"/>
 	}
 }
+
 export default App;
