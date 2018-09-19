@@ -29,6 +29,7 @@ Build a web app to search Github repositories, favourite repos, manage favourite
 - [Docs on how to create a personal access token to make request to the Github API](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/)
 
 ## Instructions to get this running
-1. App.js includes "bearer TOKEN" as a part of header, set to query GraphQL, set authorization token to your own
+1. Set authorization token to your own (App.js includes "bearer TOKEN" as a part of header, which is used to query GraphQL)
+[Docs on how to create a personal access token to make request to the Github API](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/)
 2. run npm install
 3. run npm start 
