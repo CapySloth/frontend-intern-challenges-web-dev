@@ -131,7 +131,7 @@ a:hover {
 /* Search Component End*/
 .github-link {
   position: fixed;
-  top: 50%;
+  bottom: 10px;
   right: 10px;
   box-shadow: 0 0 3px #333333;
   border-radius: 50%; }
