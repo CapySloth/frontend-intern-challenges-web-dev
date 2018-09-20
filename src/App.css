@@ -137,11 +137,7 @@ a:hover {
   border-radius: 50%; }
 
 .github-link:hover {
-  position: fixed;
-  top: 50%;
-  right: 10px;
-  box-shadow: 0 0 20px #7433f1;
-  border-radius: 50%; }
+  box-shadow: 0 0 20px #7433f1;}
 
 @media only screen and (max-width: 1000px) {
   .input[type="text"] {
