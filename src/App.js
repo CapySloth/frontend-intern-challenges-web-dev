@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './reset.css';
 import './App.css';
-
+import githublogo from './GitHub-Mark-64px.png';
 import axios from 'axios';
 
 let http = require("http");
@@ -44,9 +44,21 @@ class App extends Component {
   render() {
     return [
       <Header key="header"/>,
-      <Content key="content"/>
+      <Content key="content"/>,
+      <GitHubLink key="code-link"/>
     ];
   }
+}
+class Header extends Component {
+	constructor(props) {
+ 		super(props);
+		this.state = { title : "Title" };
+	}
+	render() {
+		return <header title="My Github Favorites">
+				<h1>My Github Favorites</h1>
+			</header>
+	}
 }
 
 class Content extends Component {
@@ -99,16 +111,11 @@ class Content extends Component {
 		)
 	}
 }
-
-class Header extends Component {
-	constructor(props) {
- 		super(props);
-		this.state = { title : "Title" };
-	}
+class GitHubLink extends Component {
 	render() {
-		return <header title="My Github Favorites">
-				<h1>My Github Favorites</h1>
-			</header>
+		return (
+      <a href="https://github.com/CapySloth/frontend-intern-challenges-web-dev.git"><img src={githublogo} alt="Link to code, hosted on GitHub" className="github-link"></img></a>
+    )
 	}
 }
 

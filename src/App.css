@@ -31,6 +31,18 @@ h1 {
   line-height: 44px;
   font-weight: 500; }
 
+table {
+  width: 100%; }
+
+th {
+  text-align: left;
+  font-weight: bold;
+  color: #333333;
+  padding: 1em 0 1em 0; }
+
+td {
+  padding: 0.25em 0; }
+
 #root {
   display: flex;
   flex-direction: column;
@@ -117,17 +129,15 @@ a:hover {
   color: red; }
 
 /* Search Component End*/
-table {
-  width: 100%; }
+.github-link {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  box-shadow: 0 0 3px #333333;
+  border-radius: 50%; }
 
-th {
-  text-align: left;
-  font-weight: bold;
-  color: #333333;
-  padding: 1em 0 1em 0; }
-
-td {
-  padding: 0.25em 0; }
+.github-link:hover {
+  box-shadow: 0 0 20px #7433f1;}
 
 @media only screen and (max-width: 1000px) {
   .input[type="text"] {
@@ -152,4 +162,7 @@ td {
 
   .table-wrapper {
     display: flex;
-    flex-shrink: 0; } }
+    flex-shrink: 0; }
+
+  .github-link {
+    display: none; } }
