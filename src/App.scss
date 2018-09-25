@@ -1,172 +1,169 @@
 /*CSS Reset is applied*/
+$text-color: #fff;
+$ink-color: #333333;
+$purple-light: #9C6ADE;
+$purple: #7433f1;
+$purple-dark: #50248F;
+$purple-darker: #230051;
+$app-background-color: #f3ecfe;
+$base-font-size: 16px;
+$title-font-size: 24px;
+$field-status-font-size: 13px;
 /* Polaris is used as a guideline */
-html, body, #root, #app {
+html, body, #root {
   height: 100%;
-  min-width: 500px; }
-
+  //This is a boo boo, but I can't spend the time making this truly mobile accessible
+  min-width: 500px;
+}
 html {
   /* Load system fonts */
   font-family: -apple-system, BlinkMacSystemFont, San Francisco, Roboto, Segoe UI, Helvetica Neue, sans-serif;
+
   /* Make type rendering look crisper */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   /* Disable auto-enlargement of small text in Safari */
   text-size-adjust: 100%;
+
   /* Enable kerning and optional ligatures */
-  text-rendering: optimizeLegibility; }
-
+  text-rendering: optimizeLegibility;
+}
 html {
-  max-width: 1920px;
+	max-width: 1920px;
   /* Centering the app, the old fashioned way*/
-  margin: 0 auto; }
-
+	margin: 0 auto;
+}
 header {
-  padding: 40px 0 40px 0;
-  text-align: center;
-  background: #7433f1;
-  color: white; }
-
+	padding: 40px 0 40px 0;
+	text-align: center;
+	background: $purple;
+	color: white;
+}
 h1 {
-  font-size: 42px;
-  line-height: 44px;
-  font-weight: 500; }
-
-table {
-  width: 100%; }
-
-th {
-  text-align: left;
-  font-weight: bold;
-  color: #333333;
-  padding: 1em 0 1em 0; }
-
-td {
-  padding: 0.25em 0; }
-
+	font-size: 42px;
+	line-height: 44px;
+	font-weight: 500;
+}
 #root {
-  display: flex;
+  display:flex;
   flex-direction: column;
-  box-shadow: 0 0 3px #333333; }
-
+  box-shadow: 0 0 3px $ink-color;
+}
 a {
-  color: #333333;
-  text-decoration: none; }
-
+  color: $ink-color;
+  text-decoration: none;
+}
 a:hover {
-  color: #7433f1; }
-
+  color: $purple;
+}
 .content {
-  display: flex;
-  height: 100%; }
-
-.leftPannel, .rightPannel {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  padding: 2em 3em 2em 3em; }
-
+	display: flex;
+  height:100%;
+}
+.leftPannel, .rightPannel{
+  flex: 1;
+	padding: 30px 40px;
+}
 .rightPannel {
-  background: #f3ecfe; }
-
+	background: $app-background-color;
+}
 /* Search Component Start */
 .search-wrapper {
   display: flex;
   flex-direction: row;
-  flex-shrink: 0; }
-
+	flex-shrink: 0;
+}
 .search-input,
 .search {
-  margin: 1em 0em 1em 0;
+  margin: 15px 0;
   box-sizing: border-box;
   border-radius: 5px;
   border: none;
-  padding: 1em 1em;
-  height: 40px; }
-
+  padding: 15px 15px;
+  height: 40px;
+}
 .search-input {
-  border: 1px solid black;
-  flex-grow: 1;
-  margin-right: 15px; }
-
+	border: 1px solid black;
+	flex-grow: 1;
+	margin-right: 15px;
+}
 .search {
-  background-color: #7433f1;
+  background-color: $purple;
   color: white;
   font-weight: 700;
   cursor: pointer;
   user-select: none;
-  padding: 1em 3.5em; }
-
+  padding: 15px 60px;
+}
 .search:hover {
   box-shadow: 0 5px 25px 0 rgba(0, 0, 0, 0.25);
-  background-color: #50248f; }
-
+  background-color: $purple-dark;
+}
 .search:focus {
   box-shadow: 0 0 0.1875em 0.1875em rgba(92, 106, 196, 0.5);
-  outline: none; }
-
+  outline: none;
+}
 .search:active {
   box-shadow: 0 0 0.1875em 0.1875em rgba(92, 106, 196, 0.5);
-  background-color: #230051;
-  border-color: #000639; }
-
+  background-color: $purple-darker;
+  border-color: #000639;
+}
 /* Making button for mutating row states look like links to match design, while honoring HTML semantics */
 .button-edit {
-  background: none;
-  color: #7433f1;
-  padding: 0;
+  background:none;
+  color: $purple;
+  padding:0;
   font: inherit;
   border: none;
-  border-bottom: 1px solid #7433f1;
+  border-bottom:1px solid  $purple;
   cursor: pointer;
   outline: 0;
-  float: right; }
-
-.button-edit:hover {
-  color: #333333; }
-
+  float: right;
+}
+.button-edit:hover{
+  color: $ink-color;
+}
 .button-edit:focus {
   outline: 0;
-  color: red; }
-
+  color: red;
+}
 /* Search Component End*/
-.github-link {
-  position: fixed;
-  top: 50%;
-  right: 10px;
-  box-shadow: 0 0 3px #333333;
-  border-radius: 50%; }
-
-.github-link:hover {
-  position: fixed;
-  top: 50%;
-  right: 10px;
-  box-shadow: 0 0 20px #7433f1;
-  border-radius: 50%; }
-
+table {
+	width: 100%;
+}
+th {
+	text-align: left;
+	font-weight: bold;
+	color: $ink-color;
+	padding: 15px 0;
+}
+td {
+	padding: 5px 0;
+}
 @media only screen and (max-width: 1000px) {
   .input[type="text"] {
-    margin: none; }
-
+    margin: none;
+  }
   #root {
-    box-shadow: none; }
-
+    box-shadow: none;
+  }
   .content {
-    display: flex;
-    flex-direction: column; }
-
+  	display: flex;
+  	flex-direction: column;
+  }
   .leftPannel, .rightPannel {
     width: auto;
-    display: block; }
-
+    display: block;
+  }
   .search-wrapper {
-    flex-direction: column; }
-
+    flex-direction: column;
+  }
   .search-input {
-    margin: 0; }
-
+    margin: 0;
+  }
   .table-wrapper {
     display: flex;
-    flex-shrink: 0; }
-
-  .github-link {
-    display: none; } }
+    flex-shrink: 0;
+  }
+}
