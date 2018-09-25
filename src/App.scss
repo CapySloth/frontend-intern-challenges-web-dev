@@ -45,11 +45,6 @@ h1 {
 	line-height: 44px;
 	font-weight: 500;
 }
-#root {
-  display:flex;
-  flex-direction: column;
-  box-shadow: 0 0 3px $ink-color;
-}
 a {
   color: $ink-color;
   text-decoration: none;
@@ -129,6 +124,10 @@ a:hover {
   color: red;
 }
 /* Search Component End*/
+.table-wrapper {
+  display: flex;
+  flex-shrink: 0;
+}
 table {
 	width: 100%;
 }
@@ -161,9 +160,5 @@ td {
   }
   .search-input {
     margin: 0;
-  }
-  .table-wrapper {
-    display: flex;
-    flex-shrink: 0;
   }
 }
