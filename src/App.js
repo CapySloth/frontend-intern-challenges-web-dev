@@ -148,11 +148,6 @@ class Search extends Component {
       query: ''
     };
   }
-  _handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      this.handleSubmit(e);
-    }
-  }
   componentDidMount() {
     this.onFetchFromGitHub();
   }
@@ -179,20 +174,17 @@ class Search extends Component {
   };
 	render() {
 		return (
-			<div  className="search-wrapper">
-				<input
-          className="search-input"
+      <form className="search-wrapper" onSubmit={this.handleSubmit}>
+        <input className="search-input"
           type="text"
           name="search"
           placeholder="Find repositories..."
           value={this.state.value}
           onKeyPress={this._handleKeyPress}
-          onChange={this.handleChange}/>
-		      <button
-          type="button"
-          onClick={this.handleSubmit}
-          className="search">Search</button>
-			</div>
+          onChange={this.handleChange}
+          required/>
+          <button className="search">Search</button>
+      </form>
 		)
 	}
 }
