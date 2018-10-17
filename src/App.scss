@@ -56,11 +56,11 @@ a:hover {
 	display: flex;
   height:100%;
 }
-.leftPannel, .rightPannel{
+.leftPanel, .rightPanel{
   flex: 1;
 	padding: 30px 40px;
 }
-.rightPannel {
+.rightPanel {
 	background: $app-background-color;
 }
 /* Search Component Start */
@@ -151,7 +151,7 @@ td {
   	display: flex;
   	flex-direction: column;
   }
-  .leftPannel, .rightPannel {
+  .leftPanel, .rightPanel {
     width: auto;
     display: block;
   }

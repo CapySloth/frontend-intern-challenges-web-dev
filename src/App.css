@@ -1,7 +1,6 @@
 /*CSS Reset is applied*/
 /* Polaris is used as a guideline */
-html, body, #root, #app {
-  height: 100%;
+html, body, #root, #app, .content {
   min-width: 500px; }
 
 html {
@@ -32,7 +31,8 @@ h1 {
   font-weight: 500; }
 
 table {
-  width: 100%; }
+  width: 100%;
+}
 
 th {
   text-align: left;
@@ -43,13 +43,8 @@ th {
 td {
   padding: 0.25em 0; }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 0 3px #333333; }
-
 a {
-  color: #333333;
+  color: #130303;
   text-decoration: none; }
 
 a:hover {
@@ -57,15 +52,19 @@ a:hover {
 
 .content {
   display: flex;
-  height: 100%; }
+  flex-direction: row;
+}
 
-.leftPannel, .rightPannel {
-  width: 50%;
+.leftPanel, .rightPanel {
   display: flex;
+  align-self: stretch;
   flex-direction: column;
+  flex-basis: 100%;
+  height: calc(100% - 200px);
   padding: 2em 3em 2em 3em; }
 
-.rightPannel {
+.rightPanel {
+  flex-grow: 1;
   background: #f3ecfe; }
 
 /* Search Component Start */
@@ -148,9 +147,9 @@ a:hover {
 
   .content {
     display: flex;
-    flex-direction: column; }
+    flex-wrap: wrap; }
 
-  .leftPannel, .rightPannel {
+  .leftPanel, .rightPanel {
     width: auto;
     display: block; }
 
